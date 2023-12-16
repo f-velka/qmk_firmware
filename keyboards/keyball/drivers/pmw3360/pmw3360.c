@@ -80,12 +80,11 @@ void pmw3360_reg_write(uint8_t addr, uint8_t data) {
 }
 
 uint16_t pmw3360_cpi_get(void) {
-    uint8_t cpival = pmw3360_reg_read(pmw3360_Config1);
-    return (uint16_t)((cpival + 1) & 0xFF) * CPI_STEP;
+    return pmw3360_reg_read(pmw3360_Config1);
 }
 
 void pmw3360_cpi_set(uint16_t cpi) {
-    uint8_t cpival = constrain((cpi / CPI_STEP) - 1, 0, pmw3360_MAXCPI);
+    uint8_t cpival = constrain(cpi, 0, pmw3360_MAXCPI);
     pmw3360_reg_write(pmw3360_Config1, cpival);
 }
 
