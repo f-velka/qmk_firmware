@@ -60,7 +60,7 @@ uint8_t pmw3360_reg_read(uint8_t addr) {
     // tSCLK-NCS for read operation is 120ns
     wait_us(1);
     spi_stop();
-    
+
     // tSRW/tSRR (=20us) minus tSCLK-NCS
     wait_us(19);
     return data;

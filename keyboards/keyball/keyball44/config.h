@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT_ID          0x0100
 #define DEVICE_VER          0x0001
 #define MANUFACTURER        Yowkees
-#define PRODUCT             Keyball61
+#define PRODUCT             Keyball44
 
 #define BMP_BOOTPIN_AS_RESET
 

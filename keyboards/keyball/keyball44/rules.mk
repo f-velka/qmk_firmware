@@ -21,11 +21,11 @@ AUDIO_ENABLE = no           # Audio output
 MOUSE_SHARED_EP = no        # Should be disabled for BLE Micro Pro
 COMBO_ENABLE = yes          # Should be enabled for BLE Micro Pro
 
-# Keyball61 is duplex matrix, uses custom matrix.
+# Keyball44 is duplex matrix, uses custom matrix.
 CUSTOM_MATRIX = yes # for BLE Micro Pro
 SRC += matrix.c
 
-# Keyball61 is split keyboard.
+# Keyball44 is split keyboard.
 SPLIT_KEYBOARD = yes
 
 # Optical sensor driver for trackball.
