@@ -35,6 +35,7 @@ const key_string_map_t custom_keys_user = {
     "KBC_RST\0KBC_SAVE\0"
     "CPI_I100\0CPI_D100\0CPI_I1K\0CPI_D1K\0"
     "SCRL_TO\0SCRL_MO\0SCRL_DVI\0SCRL_DVD\0"
+    "MY_MS_BTN1\0MY_MS_BTN2\0MY_MS_BTN3\0"
     "LOWER\0RAISE\0"
 };
 

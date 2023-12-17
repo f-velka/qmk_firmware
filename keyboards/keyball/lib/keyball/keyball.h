@@ -89,6 +89,10 @@ enum keyball_keycodes {
     SCRL_DVI, // Increment scroll divider
     SCRL_DVD, // Decrement scroll divider
 
+    MY_MS_BTN1, // 左クリック用
+    MY_MS_BTN2, // 右クリック用
+    MY_MS_BTN3, // ボタン3用
+
     KEYBALL_SAFE_RANGE,
 };
 

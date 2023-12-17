@@ -20,6 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    include "transactions.h"
 #endif
 
+#include "pointing_device.h"
+
 #include "keyball.h"
 #include "drivers/pmw3360/pmw3360.h"
 #include "lib/bmp/keyboard.h"
@@ -191,6 +193,8 @@ static inline bool should_report(void) {
     return true;
 }
 
+uint8_t mouse_key_state = 0;
+
 report_mouse_t pointing_device_driver_get_report(report_mouse_t rep) {
     // fetch from optical sensor.
     if (keyball.this_have_ball) {
@@ -204,6 +208,8 @@ report_mouse_t pointing_device_driver_get_report(report_mouse_t rep) {
     }
     // report mouse event, if keyboard is primary.
     if (is_keyboard_master() && should_report()) {
+        rep.buttons = mouse_key_state;
+
         // modify mouse report by PMW3360 motion.
         motion_to_mouse(&keyball.this_motion, &rep, is_keyboard_left(), keyball.scroll_mode);
         motion_to_mouse(&keyball.that_motion, &rep, !is_keyboard_left(), keyball.scroll_mode ^ keyball.this_have_ball);
@@ -483,6 +489,8 @@ void housekeeping_task_kb(void) {
 #endif
 
 bool process_record_kb_bmp(uint16_t keycode, keyrecord_t *record) {
+    mouse_key_state = 0;
+
     // store last keycode, row, and col for OLED
     keyball.last_kc  = keycode;
     keyball.last_pos = record->event.key;
@@ -550,6 +558,21 @@ bool process_record_kb_bmp(uint16_t keycode, keyrecord_t *record) {
             case SCRL_DVD:
                 add_scroll_div(-1);
                 break;
+
+            case MY_MS_BTN1:
+            case MY_MS_BTN2:
+            case MY_MS_BTN3:
+            {
+                uint8_t btn = 1 << (keycode - MY_MS_BTN1);
+                report_mouse_t mouse_report = pointing_device_get_report();
+                mouse_report.buttons |= btn;
+                pointing_device_set_report(mouse_report);
+                pointing_device_send();
+
+                // save button's state for drag & drop
+                mouse_key_state = mouse_report.buttons;
+                return false;
+            }
 
             default:
                 return true;
