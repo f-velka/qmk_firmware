@@ -143,6 +143,3 @@ typedef enum {
 enum {
     pmw3360_MAXCPI = 0x77, // = 119: 12000 CPI
 };
-
-report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report);
-void pointing_device_driver_init(void);

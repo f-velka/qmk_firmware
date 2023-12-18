@@ -22,13 +22,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Configurations
 
 #ifndef KEYBALL_CPI_DEFAULT
-// #    define KEYBALL_CPI_DEFAULT 500
-#    define KEYBALL_CPI_DEFAULT 300
+// #    define KEYBALL_CPI_DEFAULT
+#    define KEYBALL_CPI_DEFAULT 400
 #endif
 
 #ifndef KEYBALL_SCROLL_DIV_DEFAULT
 // #    define KEYBALL_SCROLL_DIV_DEFAULT 4 // 4: 1/8 (1/2^(n-1))
-#    define KEYBALL_SCROLL_DIV_DEFAULT 6 // 4: 1/8 (1/2^(n-1))
+#    define KEYBALL_SCROLL_DIV_DEFAULT 5
 #endif
 
 #ifndef KEYBALL_REPORTMOUSE_INTERVAL
@@ -174,6 +174,8 @@ void keyball_set_scroll_div(uint8_t div);
 
 // TODO: document
 uint16_t keyball_get_cpi(void);
+
+uint16_t keyball_get_cpi_raw(void);
 
 // TODO: document
 void keyball_set_cpi(uint16_t cpi);

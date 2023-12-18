@@ -93,19 +93,28 @@ void pointing_device_driver_init(void) {
 #if KEYBALL_MODEL != 46
     keyball.this_have_ball = pmw3360_init();
 #endif
-    if (keyball.this_have_ball) {
-        pmw3360_cpi_set(CPI_DEFAULT - 1);
-        pmw3360_reg_write(pmw3360_Motion_Burst, 0);
+
+    // try multiple times to apply default cpi
+    for (int i = 0; i < 10; ++i) {
+        wait_us(100);
+        keyball_set_cpi(CPI_DEFAULT);
+        if (keyball_get_cpi_raw() == CPI_DEFAULT) {
+            break;
+        }
     }
 }
 
-uint16_t pointing_device_driver_get_cpi(void) {
-    return keyball_get_cpi();
-}
+// uint16_t pointing_device_driver_get_cpi(void) {
+//     keyball_debug();
+//     g_count++;
+//     uint16_t v = keyball_get_cpi();
+//     g_cpi = v;
+//     return v;
+// }
 
-void pointing_device_driver_set_cpi(uint16_t cpi) {
-    keyball_set_cpi(cpi);
-}
+// void pointing_device_driver_set_cpi(uint16_t cpi) {
+//     keyball_set_cpi(cpi);
+// }
 
 static void motion_to_mouse_move(keyball_motion_t *m, report_mouse_t *r, bool is_left) {
 #if KEYBALL_MODEL == 61 || KEYBALL_MODEL == 39 || KEYBALL_MODEL == 147 || KEYBALL_MODEL == 44
@@ -438,6 +447,10 @@ void keyball_set_scroll_div(uint8_t div) {
 
 uint16_t keyball_get_cpi(void) {
     return keyball.cpi_value == 0 ? CPI_DEFAULT : keyball.cpi_value;
+}
+
+uint16_t keyball_get_cpi_raw(void) {
+    return pmw3360_cpi_get() + 1;
 }
 
 void keyball_set_cpi(uint16_t cpi) {
